@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TimePeriod
 {
-    public struct Time
+    public struct Time : IEquatable<Time>, IComparable<Time>
     {
         public static void CheckTime(byte? hours = null, byte? minutes = null, byte? seconds = null)
         {
@@ -54,5 +54,56 @@ namespace TimePeriod
             _minutes = 0;
             _seconds = 0;
         }
+
+        //hh:mm:ss
+        public Time(string time) {
+            string[] t = time.Split(":");
+            byte[] tim = new byte[3];
+
+            for (int i = 0; i < t.Length; i++){
+                tim[i] = byte.Parse(t[i]);
+            }
+            CheckTime(tim[0], tim[1], tim[2]);
+            
+            _hours = tim[0];
+            _minutes = tim[1];
+            _seconds = tim[2];
+        }
+
+        public override string ToString() => $"{Hours:D2}:{Minutes:D2}:{Seconds:D2}";
+
+        public bool Equals(Time other) => Hours == other.Hours && Minutes == other.Minutes && Seconds == other.Seconds;
+
+        public override bool Equals(object obj){
+            if (obj is Time time)
+                return Equals(time);
+            else
+                return false;
+        }
+
+        public override int GetHashCode() => (Hours, Minutes, Seconds).GetHashCode();
+
+        public int CompareTo(Time other){
+            var HoursComp = Hours.CompareTo(other.Hours);
+            if (HoursComp != 0) 
+                return HoursComp;
+
+            var MinutesComp = Minutes.CompareTo(other.Minutes);
+            if (MinutesComp != 0) 
+                return MinutesComp;
+
+            return Seconds.CompareTo(other.Seconds);
+        }
+
+        public static bool operator ==(Time t1, Time t2) => Equals(t1, t2);
+        public static bool operator !=(Time t1, Time t2) => !(t1 == t2);
+        public static bool operator <(Time t1, Time t2) => t1.CompareTo(t2) < 0;
+        public static bool operator >(Time t1, Time t2) => t1.CompareTo(t2) > 0;
+        public static bool operator <=(Time t1, Time t2) => t1.CompareTo(t2) <= 0;
+        public static bool operator >=(Time t1, Time t2) => t1.CompareTo(t2) >= 0;
+
+
+
+
     }
 }
