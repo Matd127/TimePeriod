@@ -8,8 +8,7 @@ namespace TimePeriod
 {
     public struct Time : IEquatable<Time>, IComparable<Time>
     {
-        public static void CheckTime(byte? hours = null, byte? minutes = null, byte? seconds = null)
-        {
+        public static void CheckTime(byte? hours = null, byte? minutes = null, byte? seconds = null){
             if (hours != null)
                 if (hours > 23 || hours < 0)
                     throw new ArgumentException("Niepoprawna liczba godzin");
@@ -56,7 +55,7 @@ namespace TimePeriod
         }
 
         //hh:mm:ss
-        public Time(string time) {
+        public Time(string time){
             string[] t = time.Split(":");
             byte[] tim = new byte[3];
 
@@ -101,9 +100,34 @@ namespace TimePeriod
         public static bool operator >(Time t1, Time t2) => t1.CompareTo(t2) > 0;
         public static bool operator <=(Time t1, Time t2) => t1.CompareTo(t2) <= 0;
         public static bool operator >=(Time t1, Time t2) => t1.CompareTo(t2) >= 0;
+        public static Time operator +(Time t1, Time t2) {
 
+            long time1 = t1.Hours * 3600 + t1.Minutes * 60 + t1.Seconds;
+            long time2 = t2.Hours * 3600 + t2.Minutes * 60 + t2.Seconds;
 
+            long res = time1 + time2;
 
+            var hours = (res / 3600)%24;
+            var minutes = (res % 3600)/60;
+            var seconds = res % 60;
 
+            return new Time((byte)hours, (byte)minutes, (byte)seconds);
+        }
+        public static Time operator -(Time t1, Time t2) {
+
+            long time1 = t1.Hours * 3600 + t1.Minutes * 60 + t1.Seconds;
+            long time2 = t2.Hours * 3600 + t2.Minutes * 60 + t2.Seconds;
+
+            long res = time1 - time2;
+            if (res < 0)
+                res = (24 * 3600) + res;
+
+            Console.WriteLine(res);
+            var hours = (res / 3600) % 24;
+            var minutes = (res % 3600) / 60;
+            var seconds = res % 60;
+
+            return new Time((byte)hours, (byte)minutes, (byte)seconds);
+        }
     }
 }
