@@ -11,15 +11,15 @@ namespace TimePeriod
         public static void CheckTime(byte? hours = null, byte? minutes = null, byte? seconds = null){
             if (hours != null)
                 if (hours > 23 || hours < 0)
-                    throw new ArgumentException("Niepoprawna liczba godzin");
+                    throw new ArgumentOutOfRangeException("Niepoprawna liczba godzin");
 
             if (minutes != null)
                 if (minutes > 59 || minutes < 0)
-                    throw new ArgumentException("Niepoprawna liczba minut");
+                    throw new ArgumentOutOfRangeException("Niepoprawna liczba minut");
 
             if (seconds != null)
                 if (seconds > 59 || seconds < 0)
-                    throw new ArgumentException("Niepoprawna liczba sekund");
+                    throw new ArgumentOutOfRangeException("Niepoprawna liczba sekund");
 
         }
         private readonly byte _hours;
@@ -81,7 +81,7 @@ namespace TimePeriod
         }
 
         public override int GetHashCode() => (Hours, Minutes, Seconds).GetHashCode();
-
+        
         public int CompareTo(Time other){
             var HoursComp = Hours.CompareTo(other.Hours);
             if (HoursComp != 0) 
