@@ -134,9 +134,9 @@ namespace TimePeriodUnitTests
         [DataRow((byte)17, (byte)0, (byte)5, "17:00:05")]
         [DataRow((byte)9, (byte)50, (byte)59, "09:50:59")]
         [DataRow((byte)23, (byte)59, (byte)50, "23:59:50")]
-        public void ToString_Format(byte hour, byte minute, byte second, string expectedString)
+        public void ToString_Format(byte hours, byte minutes, byte seconds, string expectedString)
         {
-            Time t = new Time(hour, minute, second);
+            Time t = new Time(hours, minutes, seconds);
 
             Assert.AreEqual(t.ToString(), expectedString);
         }
@@ -148,14 +148,177 @@ namespace TimePeriodUnitTests
         [TestMethod, TestCategory("Equals")]
         public void Equals_SameTime_True()
         {
+            Time t1 = new Time(10, 53, 22);
+            Time t2 = new Time(10, 53, 22);
 
+            Assert.AreEqual(t1.Equals(t2), true);
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_OtherTime_False()
+        {
+            Time t1 = new Time(19, 32, 55);
+            Time t2 = new Time(18, 32, 55);
+
+            Assert.AreEqual(t1.Equals(t2), false);
+        }
+
+        [DataRow("23:53:59", "23:53:59", true)]
+        [DataRow("12:34:31", "12:34:31", true)]
+        [DataRow("1:1:1", "1:1:1", true)]
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_SameTimeString_True(string str1, string str2, bool expectedResult)
+        {
+            Time t1 = new Time(str1);
+            Time t2 = new Time(str2);
+            bool result = t1.Equals(t2);
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [DataRow("15:08:13", "15:18:13", false)]
+        [DataRow("19:03:12", "9:03:12", false)]
+        [DataRow("1:1:1", "0:0:0", false)]
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_SameTimeString_False(string str1, string str2, bool expectedResult)
+        {
+            Time t1 = new Time(str1);
+            Time t2 = new Time(str2);
+            bool result = t1.Equals(t2);
+
+            Assert.AreEqual(expectedResult, result);
         }
 
         #endregion
 
         #region Operators
 
+        [DataRow((byte)12, (byte)13, (byte)15,
+           (byte)12, (byte)13, (byte)15, true)]
+        [DataRow((byte)17, (byte)13, (byte)9,
+           (byte)17, (byte)23, (byte)9, false)]
+        [TestMethod, TestCategory("Operators")]
+        public void Operator_Equal_MathOperations(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2, bool expected)
+        {
+            Time t1 = new Time(h1, m1, s1);
+            Time t2 = new Time(h2, m2, s2);
 
+            Assert.AreEqual(t1 == t2, expected);
+
+        }
+
+        [DataRow((byte)23, (byte)43, (byte)29,
+            (byte)12, (byte)13, (byte)15, true)]
+        [DataRow((byte)5, (byte)23, (byte)22,
+            (byte)5, (byte)23, (byte)22, false)]
+        [TestMethod, TestCategory("Operators")]
+        public void Operator_NotEqual_MathOperations(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2, bool expected)
+        {
+            Time t1 = new Time(h1, m1, s1);
+            Time t2 = new Time(h2, m2, s2);
+
+            Assert.AreEqual(t1 != t2, expected);
+
+        }
+
+        [DataRow((byte)12, (byte)15, (byte)33,
+            (byte)12, (byte)28, (byte)15, true)]
+        [DataRow((byte)22, (byte)21, (byte)43,
+            (byte)19, (byte)13, (byte)5, false)]
+        [TestMethod, TestCategory("Operators")]
+        public void Operator_SmallerThan_MathOperations(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2, bool expected)
+        {
+            Time t1 = new Time(h1, m1, s1);
+            Time t2 = new Time(h2, m2, s2);
+
+            Assert.AreEqual(t1 < t2, expected);
+
+        }
+
+        [DataRow((byte)23, (byte)55, (byte)17,
+            (byte)23, (byte)1, (byte)14, true)]
+        [DataRow((byte)0, (byte)0, (byte)11,
+            (byte)1, (byte)9, (byte)15, false)]
+        [TestMethod, TestCategory("Operators")]
+        public void Operator_BiggerThan_MathOperations(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2, bool expected)
+        {
+            Time t1 = new Time(h1, m1, s1);
+            Time t2 = new Time(h2, m2, s2);
+
+            Assert.AreEqual(t1 > t2, expected);
+
+        }
+
+        [DataRow((byte)11, (byte)13, (byte)22,
+            (byte)12, (byte)23, (byte)11, true)]
+        [DataRow((byte)23, (byte)0, (byte)0,
+            (byte)19, (byte)33, (byte)5, false)]
+        [DataRow((byte)16, (byte)30, (byte)0,
+            (byte)16, (byte)30, (byte)0, true)]
+        [TestMethod, TestCategory("Operators")]
+        public void Operator_SmallerOrEqual_MathOperations(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2, bool expected)
+        {
+            Time t1 = new Time(h1, m1, s1);
+            Time t2 = new Time(h2, m2, s2);
+
+            Assert.AreEqual(t1 <= t2, expected);
+
+        }
+
+        [DataRow((byte)7, (byte)15, (byte)10,
+            (byte)6, (byte)15, (byte)7, true)]
+        [DataRow((byte)12, (byte)0, (byte)0,
+            (byte)19, (byte)43, (byte)15, false)]
+        [DataRow((byte)14, (byte)46, (byte)59,
+            (byte)14, (byte)46, (byte)59, true)]
+        [TestMethod, TestCategory("Operators")]
+        public void Operator_BiggerOrEqual_MathOperations(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2, bool expected)
+        {
+            Time t1 = new Time(h1, m1, s1);
+            Time t2 = new Time(h2, m2, s2);
+
+            Assert.AreEqual(t1 >= t2, expected);
+
+        }
+
+        [DataRow((byte)7, (byte)15, (byte)10,
+            (byte)6, (byte)15, (byte)7, "13:30:17")]
+        [DataRow((byte)23, (byte)59, (byte)59,
+            (byte)0, (byte)0, (byte)1, "00:00:00")]
+        [DataRow((byte)0, (byte)0, (byte)0,
+            (byte)0, (byte)0, (byte)1, "00:00:01")]
+        [DataRow((byte)12, (byte)30, (byte)0,
+            (byte)11, (byte)30, (byte)0, "00:00:00")]
+        [TestMethod, TestCategory("Operators")]
+        public void Operator_Plus_MathOperations(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2, string expected)
+        {
+            Time t1 = new Time(h1, m1, s1);
+            Time t2 = new Time(h2, m2, s2);
+
+            Time sum = t1 + t2;
+
+            Assert.AreEqual(expected, sum.ToString());
+
+        }
+
+
+        [DataRow((byte)15, (byte)35, (byte)10,
+            (byte)5, (byte)15, (byte)10, "10:20:00")]
+        [DataRow((byte)00, (byte)00, (byte)00,
+            (byte)0, (byte)23, (byte)1, "23:36:59")]
+        [DataRow((byte)1, (byte)00, (byte)00,
+            (byte)2, (byte)0, (byte)0, "23:00:00")]
+        [TestMethod, TestCategory("Operators")]
+        public void Operator_Minus_MathOperations(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2, string expected)
+        {
+            Time t1 = new Time(h1, m1, s1);
+            Time t2 = new Time(h2, m2, s2);
+
+            Time diff = t1 - t2;
+
+            Assert.AreEqual(expected, diff.ToString());
+
+        }
 
         #endregion
     }
