@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimePeriod
+namespace TimeTimePeriod
 {   /// <summary>
     /// Struktura czasu - Time 
     /// </summary>
     public struct Time : IEquatable<Time>, IComparable<Time>
     {
         /// <summary>
-        /// Metoda pozwalajaca na sprawdzenie, czy liczba godzin jest prawidłowa
+        /// Metoda sprawdzająca poprawność parametrów
         /// </summary>
-        /// <param name="hours"></param>
-        /// <param name="minutes"></param>
-        /// <param name="seconds"></param>
+        /// <param name="hours">godziny</param>
+        /// <param name="minutes">minuty</param>
+        /// <param name="seconds">sekundy</param>
         public static void CheckTime(byte? hours = null, byte? minutes = null, byte? seconds = null){
             if (hours != null)
                 if (hours > 23 || hours < 0)

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimePeriod", "TimePeriod\TimePeriod.csproj", "{039C868B-4D27-4A3C-82FF-4353CCA726B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeTimePeriod", "TimePeriod\TimeTimePeriod.csproj", "{039C868B-4D27-4A3C-82FF-4353CCA726B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimePeriodUnitTests", "TimePeriodUnitTests\TimePeriodUnitTests.csproj", "{1349A822-DA2B-4E8B-B71B-28CE9CF88B70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimePeriodUnitTests", "TimePeriodUnitTests\TimePeriodUnitTests.csproj", "{1349A822-DA2B-4E8B-B71B-28CE9CF88B70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

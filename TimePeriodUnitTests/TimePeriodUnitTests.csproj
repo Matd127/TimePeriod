@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TimePeriod\TimePeriod.csproj" />
+    <ProjectReference Include="..\TimePeriod\TimeTimePeriod.csproj" />
   </ItemGroup>
 
 </Project>
