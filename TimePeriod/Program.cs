@@ -18,7 +18,7 @@ namespace TimeTimePeriod
             Console.WriteLine(timePeriod.ToString());
             timePeriod = new TimePeriod(55);
             Console.WriteLine(timePeriod.ToString());
-            timePeriod = new TimePeriod(168, 55, 48);
+            timePeriod = new TimePeriod(-168, 55, 48);
             Console.WriteLine(timePeriod.ToString());
             timePeriod = new TimePeriod(180,0);
             Console.WriteLine(timePeriod.ToString());

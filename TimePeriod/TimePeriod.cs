@@ -17,7 +17,7 @@ namespace TimeTimePeriod
         /// <param name="hours">godziny</param>
         /// <param name="minutes">minuty</param>
         /// <param name="seconds">sekundy</param>
-        public static void CheckTime(byte? hours = null, byte? minutes = null, byte? seconds = null)
+        public static void CheckTime(int? hours = null, int? minutes = null, int? seconds = null)
         {
             if (hours != null)
                 if (hours < 0)
@@ -32,14 +32,14 @@ namespace TimeTimePeriod
                     throw new ArgumentException("Niepoprawna liczba sekund");
 
         }
-        private long PeriodOfTime { get; }
+        public long PeriodOfTime { get; }
         /// <summary>
         /// Konstruktor z 3 parametrami - godzinami, minutami, sekundami
         /// </summary>
         /// <param name="hours">godziny</param>
         /// <param name="minutes">minuty</param>
         /// <param name="seconds">sekundy</param>
-        public TimePeriod(byte hours, byte minutes, byte seconds) {
+        public TimePeriod(int hours, int minutes, int seconds) {
             CheckTime(hours, minutes, seconds);
             PeriodOfTime = (hours * 3600) + (minutes * 60) + seconds;
         }
@@ -49,7 +49,7 @@ namespace TimeTimePeriod
         /// </summary>
         /// <param name="hours">godziny</param>
         /// <param name="minutes">minuty</param>
-        public TimePeriod(byte hours, byte minutes) {
+        public TimePeriod(int hours, int minutes) {
             CheckTime(hours, minutes);
             PeriodOfTime = (hours * 3600) + (minutes * 60);
         }
@@ -68,10 +68,10 @@ namespace TimeTimePeriod
         /// <param name="timePeriod">Odcinek czasu</param>
         public TimePeriod(string timePeriod) {
             string[] t = timePeriod.Split(":");
-            byte[] tim = new byte[3];
+            int[] tim = new int[3];
 
             for (int i = 0; i < t.Length; i++) {
-                tim[i] = byte.Parse(t[i]);
+                tim[i] = int.Parse(t[i]);
             }
             CheckTime(tim[0], tim[1], tim[2]);
 
