@@ -106,14 +106,12 @@ namespace TimeTimePeriod
         /// Porównywanie dwóch odcinków i określa, który jest większy
         /// </summary>
         /// <param name="other">Odcinek czasu</param>
-        /// <returns></returns>
         public int CompareTo(TimePeriod other) => PeriodOfTime.CompareTo(other.PeriodOfTime);
 
         /// <summary>
         /// Porównywanie 2 odcinków czasu
         /// </summary>
         /// <param name="other">Odcinek czasu</param>
-        /// <returns></returns>
         public bool Equals(TimePeriod other) => PeriodOfTime == other.PeriodOfTime;
         public override bool Equals(object obj) {
             if (obj is TimePeriod tp)

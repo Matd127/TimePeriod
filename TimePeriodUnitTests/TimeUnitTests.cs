@@ -301,7 +301,6 @@ namespace TimePeriodUnitTests
 
         }
 
-
         [DataRow((byte)15, (byte)35, (byte)10,
             (byte)5, (byte)15, (byte)10, "10:20:00")]
         [DataRow((byte)00, (byte)00, (byte)00,
