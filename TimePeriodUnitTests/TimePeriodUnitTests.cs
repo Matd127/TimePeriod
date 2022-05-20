@@ -77,6 +77,27 @@ namespace TimePeriodUnitTests
             TimePeriod tp = new(hours, minutes, seconds);
         }
 
+        [TestMethod, TestCategory("Constructors")]
+        [DataRow("-1:68:45")]
+        [DataRow("-5:-12:12")]
+        [DataRow("55:28:-4")]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_InvalidNegativeStringParams_ThrowsArgumentException(string time)
+        {
+            TimePeriod tp = new TimePeriod(time);
+        }
+
+        [TestMethod, TestCategory("Constructors")]
+        [DataRow("33;12;2")]
+        [DataRow("ff:zz:aa")]
+        [DataRow(":::")]
+        [ExpectedException(typeof(FormatException))]
+        public void Constructor_InvalidStringParams_ThrowsFormatException(string time)
+        {
+            TimePeriod tp = new TimePeriod(time);
+        }
+
+
         #endregion
 
 
